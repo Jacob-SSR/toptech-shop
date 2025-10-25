@@ -1,0 +1,53 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Category {
+  smartphone
+  tablet
+  notebook
+  monitor
+  earpods
+  desktop
+  gadget
+  accessories
+  console
+}
+
+enum Condition {
+  new
+  used
+}
+
+enum Status {
+  active
+  inactive
+  draft
+}
+
+model Product {
+  id           Int       @id @default(autoincrement())
+  sku          String    @unique
+  name         String
+  brand        String
+  category     Category
+  price        Float
+  offerPrice   Float?
+  condition    Condition
+  percent      Int?
+  defects      String?
+  description  String?
+  images       String[]
+  detailImages String[]
+  stock        Int
+  isFeatured   Boolean   @default(false)
+  status       Status    @default(active)
+  adminName    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}

@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+.input {
+  @apply w-full border border-gray-300 rounded-md px-3 py-2 
+         focus:outline-none focus:ring-1 focus:ring-red-500 transition;
+}
+
+.label {
+  @apply block font-semibold mb-1 text-gray-700;
+}
+
+.btn-primary {
+  @apply bg-red-600 text-white px-5 py-2 rounded hover:bg-red-700 transition;
+}
+
+.btn-secondary {
+  @apply border px-5 py-2 rounded hover:bg-gray-100 transition;
+}
+
+.page-container {
+  @apply p-6 bg-white min-h-screen;
+}
+
+.page-title {
+  @apply text-2xl font-bold mb-6 text-red-600;
+}
+
+.preview-grid {
+  @apply flex gap-2 mt-2 flex-wrap;
+}
+
+.preview-img {
+  @apply w-20 h-20 rounded-md object-cover border;
+}
+
+.detail-box {
+  @apply mt-2 border rounded-lg p-3 bg-gray-50;
+}
+
+.detail-summary {
+  @apply cursor-pointer text-gray-700 font-medium;
+}
+
+.form-actions {
+  @apply mt-8 flex gap-4 justify-end;
+}
+
+.admin-table {
+  @apply w-full text-left border border-gray-200 text-sm;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  @apply p-3 bg-gray-100 text-gray-700 border;
+}
+
+.admin-table td {
+  @apply p-3 border;
+}
