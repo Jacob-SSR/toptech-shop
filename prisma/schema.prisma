@@ -36,7 +36,9 @@ model Product {
   name         String
   brand        String
   category     Category
-  price        Float
+  priceNew     Float?
+  priceUsed    Float?
+  basePrice    Float?
   offerPrice   Float?
   condition    Condition
   percent      Int?

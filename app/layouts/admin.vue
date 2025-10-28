@@ -1,11 +1,8 @@
 <template>
   <div class="min-h-screen flex flex-col bg-white">
-    <!-- Navbar -->
     <AdminNavbar @toggleSidebar="sidebarOpen = !sidebarOpen" />
 
-    <!-- Main content area -->
     <div class="flex flex-1">
-      <!-- Sidebar -->
       <transition name="slide">
         <AdminSidebar
           v-if="sidebarOpen || isDesktop"
@@ -14,13 +11,11 @@
         />
       </transition>
 
-      <!-- Content -->
       <main class="flex-1 p-6 overflow-y-auto bg-white">
         <slot />
       </main>
     </div>
 
-    <!-- Overlay for mobile -->
     <div
       v-if="sidebarOpen && !isDesktop"
       class="fixed inset-0 bg-black/40 md:hidden"

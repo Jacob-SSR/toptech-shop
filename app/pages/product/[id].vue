@@ -11,7 +11,7 @@ onMounted(async () => {
   product.value = res.data;
 });
 
-const lineUrl = "https://line.me/ti/p/~toptechplaza"; // ใส่ LINE OA ของคุณ
+const lineUrl = "https://line.me/ti/p/~toptechplaza";
 </script>
 
 <template>
@@ -35,7 +35,6 @@ const lineUrl = "https://line.me/ti/p/~toptechplaza"; // ใส่ LINE OA ข�
           </div>
         </div>
 
-        <!-- รายละเอียด -->
         <div class="space-y-3">
           <h1 class="text-3xl font-bold">{{ product.name }}</h1>
           <p class="text-gray-500">{{ product.brand }}</p>

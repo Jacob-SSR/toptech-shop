@@ -14,6 +14,8 @@ export interface Product {
     | "accessories"
     | "console";
   price: number;
+  priceNew: number;
+  priceUsed: number;
   offerPrice?: number | null;
   condition: "new" | "used";
   percent?: number | null;

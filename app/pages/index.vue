@@ -1,40 +1,59 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import type { Product } from "../../server/api/types/product";
 
-const products = ref([]);
+const products = ref<Product[]>([]);
 
 onMounted(async () => {
-  const res = await axios.get("/api/products");
+  const res = await axios.get<{ products: Product[] }>("/api/products");
   products.value = res.data.products || res.data;
 });
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 p-6">
-    <h1 class="text-3xl font-bold text-center mb-8">สินค้าทั้งหมด</h1>
-
+  <div class="min-h-screen bg-[#f8f6f5] py-10 px-6">
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
     >
       <div
         v-for="p in products"
         :key="p.id"
-        class="bg-white shadow rounded-xl p-4 hover:shadow-lg transition"
+        class="bg-white border border-gray-200 shadow-sm rounded-xl p-5 hover:shadow-lg transition flex flex-col items-center"
       >
         <img
           :src="p.images?.[0] || '/no-image.png'"
           alt="product"
-          class="w-full h-56 object-cover rounded-lg"
+          class="w-full h-56 object-contain rounded-md"
         />
-        <div class="mt-3 space-y-1">
-          <h2 class="text-lg font-semibold line-clamp-1">{{ p.name }}</h2>
-          <p class="text-gray-600 text-sm">{{ p.brand }}</p>
-          <p class="text-red-500 font-bold">฿{{ p.offerPrice || p.price }}</p>
+
+        <div class="mt-4 text-center">
+          <h2 class="text-lg font-semibold text-gray-900 line-clamp-1">
+            {{ p.name }}
+          </h2>
+
+          <p class="text-gray-600 text-sm">เริ่มต้นเพียง</p>
+
+          <div class="mt-1 space-y-0.5 text-gray-800">
+            <p v-if="p.priceNew" class="text-sm">
+              มือ 1
+              <span class="font-semibold text-gray-900">
+                ฿{{ p.priceNew.toLocaleString() }}
+              </span>
+            </p>
+
+            <p v-if="p.priceUsed" class="text-sm">
+              มือ 2
+              <span class="font-semibold text-gray-900">
+                ฿{{ p.priceUsed.toLocaleString() }}
+              </span>
+            </p>
+          </div>
         </div>
+
         <NuxtLink
           :to="`/product/${p.id}`"
-          class="block mt-3 text-center bg-red-500 hover:bg-red-600 text-white rounded-md py-2"
+          class="block mt-4 w-full text-center bg-red-500 hover:bg-red-600 text-white font-medium rounded-md py-2 transition"
         >
           ดูเพิ่มเติม
         </NuxtLink>

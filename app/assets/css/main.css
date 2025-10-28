@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+.user-select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .input {
   @apply w-full border border-gray-300 rounded-md px-3 py-2 
          focus:outline-none focus:ring-1 focus:ring-red-500 transition;
@@ -25,35 +30,63 @@
   @apply text-2xl font-bold mb-6 text-red-600;
 }
 
-.preview-grid {
-  @apply flex gap-2 mt-2 flex-wrap;
-}
-
-.preview-img {
-  @apply w-20 h-20 rounded-md object-cover border;
-}
-
-.detail-box {
-  @apply mt-2 border rounded-lg p-3 bg-gray-50;
-}
-
-.detail-summary {
-  @apply cursor-pointer text-gray-700 font-medium;
-}
-
 .form-actions {
   @apply mt-8 flex gap-4 justify-end;
 }
 
 .admin-table {
-  @apply w-full text-left border border-gray-200 text-sm;
+  @apply w-full border border-gray-200 text-sm;
   border-collapse: collapse;
 }
-
+.admin-table th,
+.admin-table td {
+  @apply border border-gray-200 px-3 py-2 text-center align-middle;
+}
 .admin-table th {
-  @apply p-3 bg-gray-100 text-gray-700 border;
+  @apply font-semibold bg-gray-50 text-gray-700;
+}
+.admin-table tr:hover {
+  @apply bg-gray-50;
 }
 
-.admin-table td {
-  @apply p-3 border;
+.upload-box {
+  @apply w-full border border-black rounded-md flex justify-center items-center p-6;
+}
+
+.upload-btn {
+  @apply bg-red-500 text-white font-medium px-6 py-2 rounded-full cursor-pointer 
+         hover:bg-red-600 transition flex items-center justify-center gap-2;
+}
+
+.upload-btn .icon {
+  @apply w-4 h-4;
+}
+
+.preview-grid {
+  @apply mt-3 grid grid-cols-4 gap-3;
+}
+
+.preview-img {
+  @apply w-full h-24 object-cover rounded-md border;
+}
+
+.remove-btn {
+  @apply absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 
+         group-hover:opacity-100 transition;
+}
+
+.detail-box {
+  @apply border border-gray-300 rounded-md p-4 bg-gray-50;
+}
+
+.detail-summary {
+  @apply cursor-pointer font-semibold flex items-center justify-between text-gray-800 select-none;
+}
+
+.group[open] .detail-summary svg {
+  @apply rotate-180 text-red-500;
+}
+
+button > span {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }

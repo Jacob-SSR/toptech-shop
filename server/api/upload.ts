@@ -1,26 +1,20 @@
 import formidable from "formidable";
 import { defineEventHandler, createError } from "h3";
 import fs from "fs";
-import cloudinary from "./utils/cloudinary";
+import cloudinary from "../utils/cloudinary";
 
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+  api: { bodyParser: false },
 };
 
 export default defineEventHandler(async (event) => {
   try {
     const form = formidable({ multiples: false });
-
     const [fields, files] = await form.parse(event.node.req);
     const file = files.file?.[0];
 
     if (!file) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: "No file uploaded",
-      });
+      throw createError({ statusCode: 400, statusMessage: "No file uploaded" });
     }
 
     const uploadResult = await cloudinary.uploader.upload(file.filepath, {
