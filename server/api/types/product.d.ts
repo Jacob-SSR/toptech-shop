@@ -13,9 +13,9 @@ export interface Product {
     | "gadget"
     | "accessories"
     | "console";
-  price: number;
-  priceNew: number;
-  priceUsed: number;
+  priceNew: number | null;
+  priceUsed: number | null;
+  basePrice?: number | null;
   offerPrice?: number | null;
   condition: "new" | "used";
   percent?: number | null;
@@ -23,8 +23,10 @@ export interface Product {
   description?: string | null;
   images: string[];
   detailImages: string[];
+  colors: string[];
+  capacity: string[];
   stock: number;
-  isFeatured: boolean;
+  isFeatured?: boolean;
   status: "active" | "inactive" | "draft";
   adminName?: string | null;
   createdAt: string;

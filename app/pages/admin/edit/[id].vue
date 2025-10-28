@@ -15,8 +15,10 @@ const id = route.params.id as string;
 const loading = ref(true);
 const isUploading = ref(false);
 const product = ref<Product | null>(null);
+const newColor = ref("");
+const newCapacity = ref("");
 
-const toStringArray = (v: any) => {
+const toStringArray = (v: any): string[] => {
   if (Array.isArray(v)) return v;
   if (typeof v === "string" && v.trim()) {
     try {
@@ -32,8 +34,13 @@ const fetchProduct = async () => {
   try {
     const res = await axios.get(`/api/products/${id}`);
     product.value = res.data.product;
-    product.value.images = toStringArray(product.value.images);
-    product.value.detailImages = toStringArray(product.value.detailImages);
+
+    if (product.value) {
+      product.value.images = toStringArray(product.value.images);
+      product.value.detailImages = toStringArray(product.value.detailImages);
+      product.value.colors = toStringArray(product.value.colors);
+      product.value.capacity = toStringArray(product.value.capacity);
+    }
   } catch (err) {
     console.error("Error fetching product:", err);
     Swal.fire("Error", "ไม่สามารถโหลดข้อมูลสินค้าได้", "error");
@@ -44,12 +51,10 @@ const fetchProduct = async () => {
 
 const uploadImages = async (e: Event, isDetail = false) => {
   const files = (e.target as HTMLInputElement).files;
-  if (!files?.length) return;
-  if (!product.value) return;
+  if (!files?.length || !product.value) return;
 
   const uploaded: string[] = [];
   isUploading.value = true;
-
   try {
     for (const file of Array.from(files)) {
       const formData = new FormData();
@@ -76,9 +81,28 @@ const removeImage = (index: number, isDetail = false) => {
   else product.value.images.splice(index, 1);
 };
 
+const addColor = () => {
+  if (!newColor.value.trim()) return;
+  product.value!.colors.push(newColor.value.trim());
+  newColor.value = "";
+};
+
+const removeColor = (index: number) => {
+  product.value!.colors.splice(index, 1);
+};
+
+const addCapacity = () => {
+  if (!newCapacity.value.trim()) return;
+  product.value!.capacity.push(newCapacity.value.trim());
+  newCapacity.value = "";
+};
+
+const removeCapacity = (index: number) => {
+  product.value!.capacity.splice(index, 1);
+};
+
 const updateProduct = async () => {
   if (!product.value) return;
-
   try {
     await axios.put(`/api/products/${id}`, {
       ...product.value,
@@ -90,6 +114,8 @@ const updateProduct = async () => {
           : null,
       percent: product.value.percent ? Number(product.value.percent) : null,
       stock: Number(product.value.stock) || 0,
+      colors: product.value.colors || [],
+      capacity: product.value.capacity || [],
     });
 
     Swal.fire({
@@ -98,7 +124,6 @@ const updateProduct = async () => {
       timer: 1500,
       showConfirmButton: false,
     });
-
     router.push("/admin");
   } catch (err) {
     console.error("Error updating product:", err);
@@ -118,7 +143,6 @@ onMounted(fetchProduct);
     </div>
 
     <form v-else @submit.prevent="updateProduct" class="space-y-4 max-w-2xl">
-      <!-- Product Info -->
       <div>
         <label class="label">ชื่อสินค้า</label>
         <input v-model="product!.name" class="input" type="text" />
@@ -172,6 +196,68 @@ onMounted(fetchProduct);
             type="number"
             placeholder="ใส่เฉพาะถ้ามี"
           />
+        </div>
+      </div>
+
+      <div>
+        <label class="label">สีสินค้า</label>
+        <div class="flex gap-2 mb-2">
+          <input
+            v-model="newColor"
+            class="input flex-1"
+            placeholder="เพิ่มสีใหม่..."
+          />
+          <button
+            type="button"
+            @click="addColor"
+            class="px-3 py-2 bg-red-500 text-white rounded"
+          >
+            เพิ่ม
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span
+            v-for="(color, i) in product!.colors"
+            :key="i"
+            class="bg-gray-200 px-2 py-1 rounded text-sm flex items-center"
+          >
+            {{ color }}
+            <X
+              class="ml-1 w-3 h-3 text-red-500 cursor-pointer"
+              @click="removeColor(i)"
+            />
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <label class="label">สเปก (RAM / ความจุ)</label>
+        <div class="flex gap-2 mb-2">
+          <input
+            v-model="newCapacity"
+            class="input flex-1"
+            placeholder="เช่น 8/256GB"
+          />
+          <button
+            type="button"
+            @click="addCapacity"
+            class="px-3 py-2 bg-red-500 text-white rounded"
+          >
+            เพิ่ม
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span
+            v-for="(cap, i) in product!.capacity"
+            :key="i"
+            class="bg-gray-200 px-2 py-1 rounded text-sm flex items-center"
+          >
+            {{ cap }}
+            <X
+              class="ml-1 w-3 h-3 text-red-500 cursor-pointer"
+              @click="removeCapacity(i)"
+            />
+          </span>
         </div>
       </div>
 
@@ -303,5 +389,3 @@ onMounted(fetchProduct);
     </form>
   </div>
 </template>
-
-

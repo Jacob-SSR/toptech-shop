@@ -181,8 +181,10 @@ onMounted(() => {
               <th>Name</th>
               <th>SKU</th>
               <th>Category</th>
-              <th>Price (มือ1 / มือ2)</th>
               <th>Brand</th>
+              <th>Color</th>
+              <th>Spec</th>
+              <th>Price (มือ1 / มือ2)</th>
               <th>Condition</th>
               <th>Stock</th>
               <th>Status</th>
@@ -201,7 +203,9 @@ onMounted(() => {
               <td class="p-2 text-center">
                 <img
                   :src="
-                    p.images?.[0] || 'https://placehold.co/80x80?text=No+Image'
+                    p.images?.[0] ||
+                    p.detailImages?.[0] ||
+                    'https://placehold.co/80x80?text=No+Image'
                   "
                   class="w-12 h-12 rounded-md border object-cover mx-auto"
                   alt="Product Image"
@@ -211,6 +215,25 @@ onMounted(() => {
               <td class="font-medium text-gray-800">{{ p.name }}</td>
               <td class="text-gray-600">{{ p.sku }}</td>
               <td class="capitalize">{{ p.category }}</td>
+              <td>{{ p.brand }}</td>
+
+              <td>
+                <span v-if="p.colors?.length" class="text-xs text-gray-600">
+                  {{ Array.isArray(p.colors) ? p.colors.join(", ") : p.colors }}
+                </span>
+                <span v-else class="text-gray-400 text-xs">-</span>
+              </td>
+
+              <td>
+                <span v-if="p.capacity?.length" class="text-xs text-gray-600">
+                  {{
+                    Array.isArray(p.capacity)
+                      ? p.capacity.join(", ")
+                      : p.capacity
+                  }}
+                </span>
+                <span v-else class="text-gray-400 text-xs">-</span>
+              </td>
 
               <td class="font-semibold text-gray-700">
                 <div class="flex flex-col text-center leading-tight">
@@ -223,7 +246,6 @@ onMounted(() => {
                 </div>
               </td>
 
-              <td>{{ p.brand }}</td>
               <td>{{ p.condition === "new" ? "มือ 1" : "มือ 2" }}</td>
               <td class="text-center">{{ p.stock }}</td>
 
@@ -287,7 +309,7 @@ onMounted(() => {
             </tr>
 
             <tr v-if="!filteredProducts.length">
-              <td colspan="11" class="text-center text-gray-500 py-6">
+              <td colspan="13" class="text-center text-gray-500 py-6">
                 ไม่พบสินค้าที่ตรงกับเงื่อนไข
               </td>
             </tr>

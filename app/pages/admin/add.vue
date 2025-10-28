@@ -16,13 +16,41 @@ const product = ref({
   category: "",
   condition: "new",
   defects: "",
-  percent: null,
+  percent: null as number | null,
   stock: 0,
   images: [] as string[],
   detailImages: [] as string[],
+  colors: [] as string[],
+  capacity: [] as string[],
 });
 
+const newColor = ref("");
+const newCapacity = ref("");
 const isUploading = ref(false);
+
+const addColor = () => {
+  const color = newColor.value.trim();
+  if (color && !product.value.colors.includes(color)) {
+    product.value.colors.push(color);
+    newColor.value = "";
+  }
+};
+
+const removeColor = (index: number) => {
+  product.value.colors.splice(index, 1);
+};
+
+const addCapacity = () => {
+  const cap = newCapacity.value.trim();
+  if (cap && !product.value.capacity.includes(cap)) {
+    product.value.capacity.push(cap);
+    newCapacity.value = "";
+  }
+};
+
+const removeCapacity = (index: number) => {
+  product.value.capacity.splice(index, 1);
+};
 
 const uploadImages = async (e: Event, isDetail = false) => {
   const files = (e.target as HTMLInputElement).files;
@@ -68,7 +96,11 @@ const resetForm = () => {
     stock: 0,
     images: [],
     detailImages: [],
+    colors: [],
+    capacity: [],
   };
+  newColor.value = "";
+  newCapacity.value = "";
 };
 
 const saveProduct = async () => {
@@ -147,6 +179,68 @@ const saveProduct = async () => {
             <option value="accessories">Accessories</option>
             <option value="console">Console</option>
           </select>
+        </div>
+
+        <div>
+          <label class="label">สีสินค้า</label>
+          <div class="flex gap-2 mb-2">
+            <input
+              v-model="newColor"
+              class="input flex-1"
+              placeholder="เพิ่มสีใหม่..."
+            />
+            <button
+              type="button"
+              @click="addColor"
+              class="px-3 py-2 bg-red-500 text-white rounded"
+            >
+              เพิ่ม
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="(color, i) in product.colors"
+              :key="i"
+              class="bg-gray-200 px-2 py-1 rounded text-sm flex items-center"
+            >
+              {{ color }}
+              <X
+                class="ml-1 w-3 h-3 text-red-500 cursor-pointer"
+                @click="removeColor(i)"
+              />
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <label class="label">สเปก (RAM / ความจุ)</label>
+          <div class="flex gap-2 mb-2">
+            <input
+              v-model="newCapacity"
+              class="input flex-1"
+              placeholder="เช่น 8/256GB"
+            />
+            <button
+              type="button"
+              @click="addCapacity"
+              class="px-3 py-2 bg-red-500 text-white rounded"
+            >
+              เพิ่ม
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="(cap, i) in product.capacity"
+              :key="i"
+              class="bg-gray-200 px-2 py-1 rounded text-sm flex items-center"
+            >
+              {{ cap }}
+              <X
+                class="ml-1 w-3 h-3 text-red-500 cursor-pointer"
+                @click="removeCapacity(i)"
+              />
+            </span>
+          </div>
         </div>
 
         <div>

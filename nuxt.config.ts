@@ -47,4 +47,7 @@ export default defineNuxtConfig({
       title: "TopTech Admin",
     },
   },
+  typescript: {
+    typeCheck: true,
+  },
 });

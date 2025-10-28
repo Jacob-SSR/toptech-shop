@@ -46,6 +46,8 @@ model Product {
   description  String?
   images       String[]
   detailImages String[]
+  colors       String[]
+  capacity     String[]
   stock        Int
   isFeatured   Boolean   @default(false)
   status       Status    @default(active)

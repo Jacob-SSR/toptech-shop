@@ -2,7 +2,8 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "files": [],
   "compilerOptions": {
-    "types": ["@nuxtjs/supabase","node"],
+    "types": ["@nuxtjs/supabase","node"]
+    ,"skipLibCheck": true
   },
   "references": [
     {

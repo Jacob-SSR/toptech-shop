@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import ProductCard from "~/components/ProductCard.vue"; // ✅ ใช้ component เดียวกันทุกหน้า
-import type { Product } from "../../server/api/types/product";
+import ProductCard from "~/components/ProductCard.vue";
 
-const products = ref<Product[]>([]);
+const products = ref<any[]>([]);
 const loading = ref(true);
 
 onMounted(async () => {
   try {
-    const res = await axios.get<{ products: Product[] }>("/api/products");
+    const res = await axios.get("/api/products", {
+      params: { condition: "used" },
+    });
     products.value = res.data.products || res.data;
   } catch (err) {
-    console.error("Error loading products:", err);
+    console.error("Error loading used products:", err);
   } finally {
     loading.value = false;
   }
@@ -22,6 +23,29 @@ onMounted(async () => {
 <template>
   <div class="min-h-screen py-10 px-6">
     <div class="max-w-7xl mx-auto">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">
+          สินค้ามือ<span class="text-red-600">2</span>
+        </h1>
+        <NuxtLink
+          to="/product"
+          class="text-sm text-gray-600 hover:text-red-600 transition"
+        >
+          ← กลับหน้าสินค้าทั้งหมด
+        </NuxtLink>
+      </div>
+
+      <div v-if="loading" class="text-center text-gray-500 py-10">
+        กำลังโหลดข้อมูล...
+      </div>
+
+      <div
+        v-else-if="!products.length"
+        class="text-center text-gray-500 py-10 text-lg"
+      >
+        ไม่มีสินค้าประเภท “มือ 2”
+      </div>
+
       <div
         v-if="loading"
         class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6"
@@ -38,13 +62,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div
-        v-else-if="!products.length"
-        class="text-center text-gray-500 py-10 text-lg"
-      >
-        ยังไม่มีสินค้าในระบบ
-      </div>
-
+      <!-- ✅ Product Grid -->
       <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         <ProductCard v-for="p in products" :key="p.id" :product="p" />
       </div>
