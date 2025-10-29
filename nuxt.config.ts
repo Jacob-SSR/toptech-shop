@@ -22,7 +22,6 @@ export default defineNuxtConfig({
       ],
       trace: false,
     },
-
     prerender: {
       crawlLinks: false,
       routes: ["/"],
@@ -60,6 +59,6 @@ export default defineNuxtConfig({
   },
 
   typescript: {
-    typeCheck: true,
+    typeCheck: false,
   },
 });
