@@ -12,16 +12,13 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    noExternals: false,
     externals: {
-      inline: [
-        "@prisma/client",
-        ".prisma/client",
-        "vue-bundle-renderer",
-        "@vue/shared",
-        "@vue/server-renderer",
-      ],
-      trace: false,
+      external: ["@prisma/client", ".prisma/client"],
     },
+
+    inlineDynamicImports: false,
+
     prerender: {
       crawlLinks: false,
       routes: ["/"],
