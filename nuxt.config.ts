@@ -12,23 +12,13 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: "vercel",
-
-    rollupConfig: {
-      external: ["@prisma/client", ".prisma/client"],
-      output: {
-        format: "esm",
-      },
-    },
-
     prerender: {
       crawlLinks: false,
+      routes: ["/", "/404"],
+      ignore: ["/api"],
     },
 
-    externals: {
-      inline: ["vue-bundle-renderer", "@vue/server-renderer"],
-      trace: false,
-    },
+    noExternals: true,
   },
 
   runtimeConfig: {
