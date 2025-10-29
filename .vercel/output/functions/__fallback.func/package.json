@@ -1,0 +1,17 @@
+{
+  "name": "toptech_shop-prod",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "asap": "2.0.6",
+    "dezalgo": "1.0.4",
+    "formidable": "3.5.4",
+    "@noble/hashes": "1.8.0",
+    "once": "1.4.0",
+    "@paralleldrive/cuid2": "2.2.2",
+    "ufo": "1.6.1",
+    "vue-bundle-renderer": "2.2.0",
+    "wrappy": "1.0.2"
+  }
+}

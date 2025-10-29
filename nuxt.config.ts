@@ -14,6 +14,9 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     preset: "vercel",
+    externals: {
+      inline: ["@prisma/client", ".prisma"],
+    },
   },
   serverDir: "server",
 
