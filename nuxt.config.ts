@@ -12,19 +12,9 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    prerender: {
-      crawlLinks: false,
-      routes: ["/"],
-    },
     noExternals: true,
     rollupConfig: {
-      output: {
-        format: "esm",
-      },
-      external: ["@prisma/client"],
-    },
-    externals: {
-      inline: ["@prisma/client"],
+      external: ["@prisma/client", ".prisma/client"],
     },
   },
 
