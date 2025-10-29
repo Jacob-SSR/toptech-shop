@@ -4,14 +4,14 @@
   "installCommand": "npm ci",
   "outputDirectory": ".output",
   "functions": {
-    "api/**.js": {
-      "runtime": "nodejs18.x"
+    "api/**": {
+      "runtime": "vercel-nodejs@3.0.0"
     },
-    "api/**.mjs": {
-      "runtime": "nodejs18.x"
+    "chunks/**": {
+      "runtime": "vercel-nodejs@3.0.0"
     },
-    "chunks/**.mjs": {
-      "runtime": "nodejs18.x"
+    "server/**": {
+      "runtime": "vercel-nodejs@3.0.0"
     }
   },
   "rewrites": [
