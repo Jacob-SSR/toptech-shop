@@ -16,7 +16,7 @@ declare module "formidable" {
     [key: string]: File | File[];
   }
 
-  export interface IncomingFormOptions {
+  export interface Options {
     uploadDir?: string;
     keepExtensions?: boolean;
     maxFileSize?: number;
@@ -24,11 +24,10 @@ declare module "formidable" {
   }
 
   export class IncomingForm {
-    constructor(options?: IncomingFormOptions);
+    constructor(options?: Options);
     parse(req: IncomingMessage): Promise<[Fields, Files]>;
   }
 
-  export function formidable(
-    options?: IncomingFormOptions
-  ): IncomingForm;
+  export function formidable(options?: Options): IncomingForm;
+  export default formidable;
 }
