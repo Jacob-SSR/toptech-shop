@@ -3,14 +3,6 @@
   "buildCommand": "npm ci && npm run build",
   "installCommand": "npm ci",
   "outputDirectory": ".output",
-  "functions": {
-    ".output/server/chunks/**": {
-      "runtime": "vercel-nodejs@3.0.0"
-    },
-    ".output/server/index.mjs": {
-      "runtime": "vercel-nodejs@3.0.0"
-    }
-  },
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]
