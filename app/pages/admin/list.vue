@@ -18,7 +18,7 @@ const selectedStatus = ref("all");
 const fetchProducts = async () => {
   try {
     loading.value = true;
-    const res = await axios.get<{ products: Product[] }>("/api/products");
+    const res = await axios.get<{ products: Product[] }>("/api/admin/products");
     products.value = res.data.products || res.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -55,7 +55,7 @@ const toggleStatus = async (p: Product) => {
 
   try {
     await axios.put(`/api/products/${p.id}`, { status: newStatus });
-    p.status = newStatus;
+
     Swal.fire({
       toast: true,
       icon: "success",
@@ -63,6 +63,8 @@ const toggleStatus = async (p: Product) => {
       timer: 1500,
       showConfirmButton: false,
     });
+
+    await fetchProducts();
   } catch (err) {
     Swal.fire("Error", "อัปเดตสถานะไม่สำเร็จ", "error");
   }
@@ -237,9 +239,9 @@ onMounted(() => {
 
               <td class="font-semibold text-gray-700">
                 <div class="flex flex-col text-center leading-tight">
-                  <span v-if="p.priceNew"
-                    >มือ1 ฿{{ p.priceNew.toLocaleString() }}</span
-                  >
+                  <span v-if="p.priceNew">
+                    มือ1 ฿{{ p.priceNew.toLocaleString() }}
+                  </span>
                   <span v-if="p.priceUsed" class="text-gray-500 text-xs">
                     มือ2 ฿{{ p.priceUsed.toLocaleString() }}
                   </span>
@@ -249,6 +251,7 @@ onMounted(() => {
               <td>{{ p.condition === "new" ? "มือ 1" : "มือ 2" }}</td>
               <td class="text-center">{{ p.stock }}</td>
 
+              <!-- Status Switch -->
               <td class="text-center">
                 <div class="flex flex-col items-center gap-1">
                   <span
@@ -267,6 +270,7 @@ onMounted(() => {
                         : "ฉบับร่าง"
                     }}
                   </span>
+
                   <button
                     @click="toggleStatus(p)"
                     class="relative w-12 h-6 flex items-center rounded-full transition-all duration-300"
@@ -288,6 +292,7 @@ onMounted(() => {
                 </div>
               </td>
 
+              <!-- Actions -->
               <td class="text-center align-middle">
                 <div class="flex justify-center items-center gap-3">
                   <NuxtLink
@@ -297,6 +302,7 @@ onMounted(() => {
                   >
                     <Pencil class="w-5 h-5" />
                   </NuxtLink>
+
                   <button
                     @click="deleteProduct(p.id)"
                     class="text-red-500 hover:text-red-700 transition"
