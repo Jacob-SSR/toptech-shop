@@ -1,0 +1,120 @@
+{
+  "version": 3,
+  "overrides": {},
+  "routes": [
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/builds/meta/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=1, immutable"
+      },
+      "src": "/_nuxt/builds/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/(.*)"
+    },
+    {
+      "src": "/_nuxt/builds/meta(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt/builds(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "(?<url>/__nuxt_error)",
+      "dest": "/__fallback"
+    },
+    {
+      "src": "/product/condition/used",
+      "dest": "/product/condition/used"
+    },
+    {
+      "src": "/product/condition/new",
+      "dest": "/product/condition/new"
+    },
+    {
+      "src": "/__nuxt_error",
+      "dest": "/__nuxt_error"
+    },
+    {
+      "src": "/api/upload",
+      "dest": "/api/upload"
+    },
+    {
+      "src": "/api/products",
+      "dest": "/api/products"
+    },
+    {
+      "src": "/admin/login",
+      "dest": "/admin/login"
+    },
+    {
+      "src": "/admin/list",
+      "dest": "/admin/list"
+    },
+    {
+      "src": "/admin/add",
+      "dest": "/admin/add"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin"
+    },
+    {
+      "src": "/",
+      "dest": "/index"
+    },
+    {
+      "src": "/product/category/(?<category>[^/]+)",
+      "dest": "/product/category/[category]"
+    },
+    {
+      "src": "/product/(?<brand>[^/]+)/(?<id>[^/]+)",
+      "dest": "/product/[brand]/[id]"
+    },
+    {
+      "src": "/product/brand/(?<brand>[^/]+)",
+      "dest": "/product/brand/[brand]"
+    },
+    {
+      "src": "/api/products/(?<id>[^/]+)",
+      "dest": "/api/products/[id]"
+    },
+    {
+      "src": "/admin/edit/(?<id>[^/]+)",
+      "dest": "/admin/edit/[id]"
+    },
+    {
+      "src": "/__nuxt_island/(?:.*)",
+      "dest": "/__nuxt_island/[...]"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/__fallback"
+    }
+  ]
+}

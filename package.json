@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@nuxtjs/supabase": "^2.0.1",
-    "@prisma/client": "^6.17.1",
+    "@prisma/client": "^6.18.0",
     "@supabase/supabase-js": "^2.76.1",
     "@tailwindcss/vite": "^4.1.15",
     "axios": "^1.12.2",

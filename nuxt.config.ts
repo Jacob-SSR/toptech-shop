@@ -14,11 +14,13 @@ export default defineNuxtConfig({
   nitro: {
     preset: "vercel",
 
-    externals: {
-      inline: ["@prisma/client"],
+    rollupConfig: {
+      external: ["@prisma/client", ".prisma/client"],
     },
 
-    noExternals: false,
+    prerender: {
+      crawlLinks: false,
+    },
   },
 
   runtimeConfig: {
