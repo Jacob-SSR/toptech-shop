@@ -13,9 +13,13 @@ export default defineNuxtConfig({
   nitro: {
     preset: "vercel",
     externals: {
-      inline: ["@prisma/client", ".prisma/client"],
-      trace: false,
-    },
+      inline: [
+        "vue-bundle-renderer",
+        "@vue/shared",
+        "@vue/compiler-dom",
+        "@vue/compiler-core"
+      ]
+    }
   },
 
   serverDir: "server",
