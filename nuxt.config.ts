@@ -8,26 +8,14 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      include: [
-        "@supabase/supabase-js",
-        "@supabase/postgrest-js",
-        "@supabase/functions-js",
-        "@supabase/storage-js"
-      ],
-    },
-    ssr: {
-      noExternal: [
-        "@supabase/supabase-js",
-        "@supabase/postgrest-js",
-        "@supabase/functions-js",
-        "@supabase/storage-js"
-      ],
-    },
   },
 
   nitro: {
     preset: "vercel",
+    externals: {
+      inline: ["@prisma/client", ".prisma/client"],
+      trace: false,
+    },
   },
 
   serverDir: "server",
