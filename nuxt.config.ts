@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: "node-server",
+    preset: "vercel",
   },
   serverDir: "server",
 
@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     redirect: false,
   },
 
-  ssr: false,
+  ssr: true,
 
   experimental: {
     payloadExtraction: false,

@@ -1,0 +1,70 @@
+{
+  "version": 3,
+  "overrides": {
+    "admin/index.html": {
+      "path": "admin"
+    },
+    "admin/login/index.html": {
+      "path": "admin/login"
+    },
+    "index.html": {
+      "path": ""
+    },
+    "admin/list/index.html": {
+      "path": "admin/list"
+    },
+    "admin/add/index.html": {
+      "path": "admin/add"
+    },
+    "product/condition/new/index.html": {
+      "path": "product/condition/new"
+    },
+    "product/condition/used/index.html": {
+      "path": "product/condition/used"
+    }
+  },
+  "routes": [
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/builds/meta/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=1, immutable"
+      },
+      "src": "/_nuxt/builds/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/(.*)"
+    },
+    {
+      "src": "/_nuxt/builds/meta(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt/builds(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}
