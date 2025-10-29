@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  ssr: true,
+  ssr: false,
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
@@ -17,13 +17,14 @@ export default defineNuxtConfig({
       routes: ["/"],
     },
     noExternals: true,
-    esbuild: {
-      options: {
-        define: {
-          __dirname: "'__dirname_placeholder'",
-          __filename: "'__filename_placeholder'",
-        },
+    rollupConfig: {
+      output: {
+        format: "esm",
       },
+      external: ["@prisma/client"],
+    },
+    externals: {
+      inline: ["@prisma/client"],
     },
   },
 
