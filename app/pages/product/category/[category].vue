@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-import ProductCard from "~/components/ProductCard.vue"; // ✅ ใช้ component ที่เราเตรียมไว้
+import ProductCard from "~/components/ProductCard.vue";
 
 const route = useRoute();
 const category = computed(() => route.params.category as string);
@@ -27,15 +27,6 @@ onMounted(async () => {
 <template>
   <div class="min-h-screen py-10 px-6">
     <div class="max-w-7xl mx-auto">
-      <div class="flex justify-between items-center mb-8">
-        <NuxtLink
-          to="/product"
-          class="text-sm text-gray-600 hover:text-red-600 transition"
-        >
-          ← กลับหน้าสินค้าทั้งหมด
-        </NuxtLink>
-      </div>
-
       <div v-if="loading" class="text-center text-gray-500 py-10">
         กำลังโหลดข้อมูล...
       </div>

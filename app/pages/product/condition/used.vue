@@ -23,18 +23,6 @@ onMounted(async () => {
 <template>
   <div class="min-h-screen py-10 px-6">
     <div class="max-w-7xl mx-auto">
-      <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">
-          สินค้ามือ<span class="text-red-600">2</span>
-        </h1>
-        <NuxtLink
-          to="/product"
-          class="text-sm text-gray-600 hover:text-red-600 transition"
-        >
-          ← กลับหน้าสินค้าทั้งหมด
-        </NuxtLink>
-      </div>
-
       <div v-if="loading" class="text-center text-gray-500 py-10">
         กำลังโหลดข้อมูล...
       </div>
