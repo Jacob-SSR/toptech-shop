@@ -17,15 +17,12 @@ export default defineNuxtConfig({
       routes: ["/"],
     },
     noExternals: true,
-    alias: {
-      "#internal/nitro/utils": "nitropack/dist/runtime/utils",
-    },
-    rollupConfig: {
-      output: {
-        banner: `import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);`,
+    esbuild: {
+      options: {
+        define: {
+          __dirname: "'__dirname_placeholder'",
+          __filename: "'__filename_placeholder'",
+        },
       },
     },
   },
