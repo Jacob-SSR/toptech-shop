@@ -3,11 +3,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev",
-    "build": "npx prisma generate && nuxt build",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "npx prisma generate && nuxt prepare"
+     "dev": "nuxt dev",
+    "build": "npx prisma generate && npx nuxt build",
+    "generate": "npx nuxt generate",
+    "preview": "npx nuxt preview",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@nuxtjs/supabase": "^2.0.1",
