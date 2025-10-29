@@ -1,10 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model Product {
+  id           Int       @id @default(autoincrement())
+  sku          String    @unique
+  name         String
+  brand        String
+  offerPrice   Float?
+  percent      Int?
+  defects      String?
+  description  String?
+  images       String[]
+  detailImages String[]
+  stock        Int
+  isFeatured   Boolean   @default(false)
+  adminName    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  category     Category
+  condition    Condition
+  status       Status    @default(active)
+  basePrice    Float?
+  priceNew     Float?
+  priceUsed    Float?
+  capacity     String[]
+  colors       String[]
 }
 
 enum Category {
@@ -28,30 +54,4 @@ enum Status {
   active
   inactive
   draft
-}
-
-model Product {
-  id           Int       @id @default(autoincrement())
-  sku          String    @unique
-  name         String
-  brand        String
-  category     Category
-  priceNew     Float?
-  priceUsed    Float?
-  basePrice    Float?
-  offerPrice   Float?
-  condition    Condition
-  percent      Int?
-  defects      String?
-  description  String?
-  images       String[]
-  detailImages String[]
-  colors       String[]
-  capacity     String[]
-  stock        Int
-  isFeatured   Boolean   @default(false)
-  status       Status    @default(active)
-  adminName    String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
 }

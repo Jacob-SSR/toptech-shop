@@ -2,21 +2,21 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "files": [],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": ["@nuxtjs/supabase", "node", "vite/client"],
-    "skipLibCheck": true,
-    "strict": true,
-    "allowJs": true,
-    "noEmit": true,
-    "esModuleInterop": true
+    "types": ["@nuxtjs/supabase","node"]
+    ,"skipLibCheck": true
   },
   "references": [
-    { "path": "./.nuxt/tsconfig.app.json" },
-    { "path": "./.nuxt/tsconfig.server.json" },
-    { "path": "./.nuxt/tsconfig.shared.json" },
-    { "path": "./.nuxt/tsconfig.node.json" }
+    {
+      "path": "./.nuxt/tsconfig.app.json"
+    },
+    {
+      "path": "./.nuxt/tsconfig.server.json"
+    },
+    {
+      "path": "./.nuxt/tsconfig.shared.json"
+    },
+    {
+      "path": "./.nuxt/tsconfig.node.json"
+    }
   ]
 }

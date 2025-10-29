@@ -1,7 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  ssr: true,
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
@@ -9,39 +8,49 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        "@supabase/supabase-js",
+        "@supabase/postgrest-js",
+        "@supabase/functions-js",
+        "@supabase/storage-js"
+      ],
+    },
+    ssr: {
+      noExternal: [
+        "@supabase/supabase-js",
+        "@supabase/postgrest-js",
+        "@supabase/functions-js",
+        "@supabase/storage-js"
+      ],
+    },
   },
 
   nitro: {
-    noExternals: false,
-    externals: {
-      external: ["@prisma/client", ".prisma/client"],
-    },
-
-    inlineDynamicImports: false,
-
-    prerender: {
-      crawlLinks: false,
-      routes: ["/"],
-    },
+    preset: "node-server",
   },
 
+  serverDir: "server",
+
   runtimeConfig: {
-    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
-    cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY!,
+    cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET!,
     public: {
-      cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
-      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
-      supabaseAnonKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
+      cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME!,
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL!,
+      supabaseAnonKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY!,
     },
   },
 
   modules: ["@nuxtjs/supabase"],
 
   supabase: {
-    url: process.env.NUXT_PUBLIC_SUPABASE_URL,
-    key: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
+    url: process.env.NUXT_PUBLIC_SUPABASE_URL!,
+    key: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY!,
     redirect: false,
   },
+
+  ssr: true,
 
   experimental: {
     payloadExtraction: false,
@@ -56,6 +65,6 @@ export default defineNuxtConfig({
   },
 
   typescript: {
-    typeCheck: false,
+    typeCheck: true,
   },
 });
