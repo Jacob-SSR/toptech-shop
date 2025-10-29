@@ -1,8 +1,8 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  ssr: true,
   compatibilityDate: "2025-07-15",
-  future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
 
   css: ["@/assets/css/main.css"],
@@ -11,14 +11,15 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  ssr: true,
   nitro: {
     preset: "vercel",
+
     externals: {
-      inline: ["@prisma/client", ".prisma"],
+      inline: ["@prisma/client"],
     },
+
+    noExternals: false,
   },
-  serverDir: "server",
 
   runtimeConfig: {
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
@@ -46,7 +47,7 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      title: "TopTech Shop",
+      title: "TopTech Admin",
     },
   },
 
