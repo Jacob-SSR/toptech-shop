@@ -20,14 +20,14 @@
     "cloudinary": "^2.8.0",
     "formidable": "^3.5.4",
     "lucide-vue-next": "^0.548.0",
+    "nuxt": "^4.2.0",
     "prisma": "^6.17.1",
     "sweetalert2": "^11.26.3",
     "tailwindcss": "^4.1.15",
     "vue": "^3.5.22",
     "vue-bundle-renderer": "^2.2.0",
     "vue-router": "^4.6.3",
-    "zod": "^4.1.12",
-    "nuxt": "^4.2.0"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@nuxt/types": "^2.18.1",
