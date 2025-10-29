@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-     "dev": "nuxt dev",
+    "dev": "nuxt dev",
     "build": "npx prisma generate && npx nuxt build",
     "generate": "npx nuxt generate",
     "preview": "npx nuxt preview",
@@ -26,13 +26,13 @@
     "vue": "^3.5.22",
     "vue-bundle-renderer": "^2.2.0",
     "vue-router": "^4.6.3",
-    "zod": "^4.1.12"
+    "zod": "^4.1.12",
+    "nuxt": "^4.2.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.18.1",
     "@types/formidable": "^3.4.6",
     "@types/node": "^24.9.1",
-    "nuxt": "^4.2.0",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.1.2"
   }
