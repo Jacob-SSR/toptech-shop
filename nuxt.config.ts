@@ -14,7 +14,6 @@ export default defineNuxtConfig({
   nitro: {
     preset: "vercel",
     
-    // กำหนด external อย่างชัดเจน
     rollupConfig: {
       external: [
         "@prisma/client",
@@ -29,7 +28,6 @@ export default defineNuxtConfig({
       crawlLinks: false,
     },
 
-    // ปิด trace เพื่อให้ bundle ทุกอย่างในไฟล์
     externals: {
       inline: ["vue-bundle-renderer", "@vue/server-renderer"],
       trace: false,
