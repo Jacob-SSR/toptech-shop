@@ -1,9 +1,2 @@
-import { PrismaClient } from '@prisma/client';
-
-const globalForPrisma = globalThis;
-const prisma = globalForPrisma.prisma ?? new PrismaClient({
-  log: ["error"]
-});
-
-export { prisma as p };
+import{PrismaClient as r}from"@prisma/client";var o;const l=null!=(o=globalThis.prisma)?o:new r({log:["error"]});export{l as p};
 //# sourceMappingURL=prisma.mjs.map

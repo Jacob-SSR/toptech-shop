@@ -13,28 +13,25 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "vercel",
-
+    
     rollupConfig: {
       external: [
         "@prisma/client",
         ".prisma/client",
-        "node:stream",
-        "node:util",
+        /^node:/,
       ],
-      output: {
-        format: "esm",
-      },
     },
 
     prerender: {
       crawlLinks: false,
     },
 
-    esbuild: {
-      options: {
-        target: "es2020",
-      },
+    externals: {
+      inline: [],
+      trace: false,
     },
+
+    minify: true,
   },
 
   runtimeConfig: {
