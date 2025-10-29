@@ -14,10 +14,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: false,
-      routes: ["/", "/404"],
-      ignore: ["/api"],
+      routes: ["/"],
     },
-
     noExternals: true,
   },
 
