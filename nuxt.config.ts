@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: true,
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
@@ -12,9 +12,14 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    noExternals: true,
-    rollupConfig: {
+    externals: {
       external: ["@prisma/client", ".prisma/client"],
+      trace: false,
+    },
+
+    prerender: {
+      crawlLinks: false,
+      routes: ["/"],
     },
   },
 
