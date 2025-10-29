@@ -21,7 +21,6 @@ function toStringArray(v) {
   return [];
 }
 const index_post = defineEventHandler(async (event) => {
-  var _a, _b;
   try {
     const body = await readBody(event);
     const images = toStringArray(body.images);
@@ -48,8 +47,8 @@ const index_post = defineEventHandler(async (event) => {
         capacity,
         stock: Number(body.stock) || 0,
         isFeatured: !!body.isFeatured,
-        status: (_a = body.status) != null ? _a : "active",
-        adminName: (_b = body.adminName) != null ? _b : null
+        status: body.status ?? "active",
+        adminName: body.adminName ?? null
       }
     });
     return { success: true, product: newProduct };

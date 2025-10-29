@@ -20,11 +20,10 @@ const config = {
   api: { bodyParser: false }
 };
 const upload = defineEventHandler(async (event) => {
-  var _a;
   try {
     const form = formidable({ multiples: false });
     const [fields, files] = await form.parse(event.node.req);
-    const file = (_a = files.file) == null ? void 0 : _a[0];
+    const file = files.file?.[0];
     if (!file) {
       throw createError({ statusCode: 400, statusMessage: "No file uploaded" });
     }

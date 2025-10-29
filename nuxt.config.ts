@@ -15,11 +15,25 @@ export default defineNuxtConfig({
     preset: "vercel",
 
     rollupConfig: {
-      external: ["@prisma/client", ".prisma/client"],
+      external: [
+        "@prisma/client",
+        ".prisma/client",
+        "node:stream",
+        "node:util",
+      ],
+      output: {
+        format: "esm",
+      },
     },
 
     prerender: {
       crawlLinks: false,
+    },
+
+    esbuild: {
+      options: {
+        target: "es2020",
+      },
     },
   },
 

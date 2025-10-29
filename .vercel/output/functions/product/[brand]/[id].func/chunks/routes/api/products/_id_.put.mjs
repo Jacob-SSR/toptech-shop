@@ -21,7 +21,6 @@ function toStringArray(v) {
   return [];
 }
 const _id__put = defineEventHandler(async (event) => {
-  var _a, _b, _c;
   try {
     const id = Number(getRouterParam(event, "id"));
     const body = await readBody(event);
@@ -41,9 +40,9 @@ const _id__put = defineEventHandler(async (event) => {
     if (body.condition != null) data.condition = body.condition;
     if (body.percent !== void 0)
       data.percent = body.percent ? Number(body.percent) : null;
-    if (body.defects !== void 0) data.defects = (_a = body.defects) != null ? _a : null;
+    if (body.defects !== void 0) data.defects = body.defects ?? null;
     if (body.description !== void 0)
-      data.description = (_b = body.description) != null ? _b : null;
+      data.description = body.description ?? null;
     if (body.images !== void 0) data.images = toStringArray(body.images);
     if (body.detailImages !== void 0)
       data.detailImages = toStringArray(body.detailImages);
@@ -53,7 +52,7 @@ const _id__put = defineEventHandler(async (event) => {
     if (body.stock != null) data.stock = Number(body.stock);
     if (body.isFeatured !== void 0) data.isFeatured = !!body.isFeatured;
     if (body.status != null) data.status = body.status;
-    if (body.adminName !== void 0) data.adminName = (_c = body.adminName) != null ? _c : null;
+    if (body.adminName !== void 0) data.adminName = body.adminName ?? null;
     const product = await prisma.product.update({
       where: { id },
       data

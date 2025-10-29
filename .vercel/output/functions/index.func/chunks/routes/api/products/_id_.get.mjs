@@ -10,8 +10,7 @@ import 'node:crypto';
 import '@prisma/client';
 
 const _id__get = defineEventHandler(async (event) => {
-  var _a;
-  const id = Number((_a = event.context.params) == null ? void 0 : _a.id);
+  const id = Number(event.context.params?.id);
   if (!id) throw createError({ statusCode: 400, statusMessage: "Missing product ID" });
   try {
     const product = await prisma.product.findUnique({ where: { id } });
