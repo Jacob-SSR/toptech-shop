@@ -13,6 +13,10 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    externals: {
+      inline: ["@prisma/client"],
+      trace: false,
+    },
     prerender: {
       crawlLinks: false,
     },
