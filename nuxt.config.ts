@@ -2,7 +2,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   ssr: false,
-
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
@@ -13,12 +12,22 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    externals: {
-      inline: ["@prisma/client"],
-      trace: false,
+    preset: "vercel",
+
+    rollupConfig: {
+      external: ["@prisma/client", ".prisma/client"],
+      output: {
+        format: "esm",
+      },
     },
+
     prerender: {
       crawlLinks: false,
+    },
+
+    externals: {
+      inline: ["vue-bundle-renderer", "@vue/server-renderer"],
+      trace: false,
     },
   },
 
