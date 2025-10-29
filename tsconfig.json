@@ -8,7 +8,8 @@
     "noEmit": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ES6", "DOM", "DOM.Iterable"],
   },
   "references": [
     {
