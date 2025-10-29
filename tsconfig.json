@@ -2,8 +2,13 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "files": [],
   "compilerOptions": {
-    "types": ["@nuxtjs/supabase","node"]
-    ,"skipLibCheck": true
+    "types": ["@nuxtjs/supabase","node"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "references": [
     {
