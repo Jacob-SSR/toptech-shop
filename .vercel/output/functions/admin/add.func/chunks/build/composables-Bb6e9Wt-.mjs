@@ -1,2 +1,23 @@
-import{hasInjectionContext as e,inject as r}from"file://D:/workshop/FullStack/toptech_shop/node_modules/vue/index.mjs";import{u as t}from"./server.mjs";import{u as n,h as o}from"../routes/renderer.mjs";function useHead(s,u={}){const a=u.head||function(n){const s=n||t();return s.ssrContext?.head||s.runWithContext(()=>{if(e()){const e=r(o);if(!e)throw new Error("[nuxt] [unhead] Missing Unhead instance.");return e}})}(u.nuxt);return n(s,{head:a,...u})}export{useHead as u};
+import { hasInjectionContext, inject } from 'file://D:/workshop/FullStack/toptech_shop/node_modules/vue/index.mjs';
+import { u as useNuxtApp } from './server.mjs';
+import { u as useHead$1, h as headSymbol } from '../routes/renderer.mjs';
+
+function injectHead(nuxtApp) {
+  const nuxt = nuxtApp || useNuxtApp();
+  return nuxt.ssrContext?.head || nuxt.runWithContext(() => {
+    if (hasInjectionContext()) {
+      const head = inject(headSymbol);
+      if (!head) {
+        throw new Error("[nuxt] [unhead] Missing Unhead instance.");
+      }
+      return head;
+    }
+  });
+}
+function useHead(input, options = {}) {
+  const head = options.head || injectHead(options.nuxt);
+  return useHead$1(input, { head, ...options });
+}
+
+export { useHead as u };
 //# sourceMappingURL=composables-Bb6e9Wt-.mjs.map

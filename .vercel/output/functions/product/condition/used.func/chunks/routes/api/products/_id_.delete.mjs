@@ -1,2 +1,30 @@
-import{d as t,c as e}from"../../../_/nitro.mjs";import{p as o}from"../../../_/prisma.mjs";import"node:http";import"node:https";import"node:events";import"node:buffer";import"node:fs";import"node:path";import"node:crypto";import"@prisma/client";const r=t(async t=>{var r;const s=Number(null==(r=t.context.params)?void 0:r.id);if(!s)throw e({statusCode:400,statusMessage:"Missing product ID"});try{return await o.product.delete({where:{id:s}}),{success:!0,message:"Product deleted successfully"}}catch(t){throw console.error("Error deleting product:",t),e({statusCode:500,statusMessage:"Failed to delete product"})}});export{r as default};
+import { d as defineEventHandler, c as createError } from '../../../_/nitro.mjs';
+import { p as prisma } from '../../../_/prisma.mjs';
+import 'node:http';
+import 'node:https';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:path';
+import 'node:crypto';
+import '@prisma/client';
+
+const _id__delete = defineEventHandler(async (event) => {
+  var _a;
+  const id = Number((_a = event.context.params) == null ? void 0 : _a.id);
+  if (!id)
+    throw createError({ statusCode: 400, statusMessage: "Missing product ID" });
+  try {
+    await prisma.product.delete({ where: { id } });
+    return { success: true, message: "Product deleted successfully" };
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Failed to delete product"
+    });
+  }
+});
+
+export { _id__delete as default };
 //# sourceMappingURL=_id_.delete.mjs.map
