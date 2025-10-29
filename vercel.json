@@ -4,13 +4,10 @@
   "installCommand": "npm ci",
   "outputDirectory": ".output",
   "functions": {
-    "api/**/*.js": {
+    ".output/server/chunks/**": {
       "runtime": "vercel-nodejs@3.0.0"
     },
-    ".output/server/**/*.mjs": {
-      "runtime": "vercel-nodejs@3.0.0"
-    },
-    ".output/server/**/*.js": {
+    ".output/server/index.mjs": {
       "runtime": "vercel-nodejs@3.0.0"
     }
   },
