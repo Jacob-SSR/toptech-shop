@@ -2,7 +2,7 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "files": [],
   "compilerOptions": {
-    "types": ["@nuxtjs/supabase","node"],
+    "types": ["@nuxtjs/supabase", "node"],
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -10,18 +10,17 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
+  "include": [
+    "server/**/*.ts",
+    "server/**/*.d.ts",
+    "types/**/*.d.ts",
+    "components/**/*.vue",
+    "pages/**/*.vue"
+  ],
   "references": [
-    {
-      "path": "./.nuxt/tsconfig.app.json"
-    },
-    {
-      "path": "./.nuxt/tsconfig.server.json"
-    },
-    {
-      "path": "./.nuxt/tsconfig.shared.json"
-    },
-    {
-      "path": "./.nuxt/tsconfig.node.json"
-    }
+    { "path": "./.nuxt/tsconfig.app.json" },
+    { "path": "./.nuxt/tsconfig.server.json" },
+    { "path": "./.nuxt/tsconfig.shared.json" },
+    { "path": "./.nuxt/tsconfig.node.json" }
   ]
 }
