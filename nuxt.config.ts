@@ -20,7 +20,6 @@ export default defineNuxtConfig({
         "@vue/compiler-core",
       ],
       external: ["@prisma/client"],
-      traceInclude: ["@prisma/client"],
     },
   },
 
