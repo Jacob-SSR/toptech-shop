@@ -1,12 +1,9 @@
 import { v2 as cloudinary } from "cloudinary";
-import { useRuntimeConfig } from "#imports";
-
-const config = useRuntimeConfig();
 
 cloudinary.config({
-  cloud_name: config.public.cloudinaryCloudName,
-  api_key: config.cloudinaryApiKey,
-  api_secret: config.cloudinaryApiSecret,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "",
+  api_key: process.env.CLOUDINARY_API_KEY || "",
+  api_secret: process.env.CLOUDINARY_API_SECRET || "",
 });
 
 export default cloudinary;
