@@ -2,7 +2,8 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "files": [],
   "compilerOptions": {
-    "types": ["@nuxtjs/supabase","node"],
+    "types": ["@nuxtjs/supabase", "node"],
+    "typeRoots": ["./node_modules/@types", "./server/api/types"],
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
