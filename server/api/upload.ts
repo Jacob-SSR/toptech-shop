@@ -1,7 +1,6 @@
-// @ts-ignore
-import formidable from "formidable";
 import { defineEventHandler, createError } from "h3";
 import fs from "fs";
+import { IncomingForm } from "formidable";
 import cloudinary from "../utils/cloudinary";
 
 export const config = {
@@ -10,8 +9,6 @@ export const config = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const { IncomingForm } = require("formidable");
-
     const form = new IncomingForm({ multiples: false });
     const [fields, files] = await form.parse(event.node.req);
 

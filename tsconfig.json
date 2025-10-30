@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ES6", "DOM", "DOM.Iterable"],
+    "lib": ["ES6", "DOM", "DOM.Iterable"]
   },
   "references": [
     {

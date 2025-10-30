@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import ProductCard from "~/components/ProductCard.vue"; // ✅ ใช้ component เดียวกันทุกหน้า
+import ProductCard from "~/components/ProductCard.vue";
 import type { Product } from "../../server/api/types/product";
 
 const products = ref<Product[]>([]);
