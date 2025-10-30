@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
   let filePath: string | null = null;
 
   try {
+
     const { IncomingForm } = await import("formidable");
 
     const form = new IncomingForm({ multiples: false });
