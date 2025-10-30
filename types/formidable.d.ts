@@ -27,8 +27,4 @@ declare module "formidable" {
     constructor(options?: IncomingFormOptions);
     parse(req: any): Promise<[Fields, Files]>;
   }
-
-  export function formidable(
-    options?: IncomingFormOptions
-  ): Promise<[Fields, Files]>;
 }
