@@ -1,3 +1,4 @@
+// @ts-ignore
 import { defineEventHandler, createError } from "h3";
 import fs from "fs";
 import cloudinary from "../utils/cloudinary";
@@ -17,7 +18,10 @@ export default defineEventHandler(async (event) => {
     const file = fileArray[0];
 
     if (!file || !file.filepath) {
-      throw createError({ statusCode: 400, statusMessage: "No file uploaded" });
+      throw createError({
+        statusCode: 400,
+        statusMessage: "No file uploaded",
+      });
     }
 
     const uploadResult = await cloudinary.uploader.upload(file.filepath, {
