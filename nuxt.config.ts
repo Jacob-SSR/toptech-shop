@@ -17,9 +17,10 @@ export default defineNuxtConfig({
         "vue-bundle-renderer",
         "@vue/shared",
         "@vue/compiler-dom",
-        "@vue/compiler-core"
-      ]
-    }
+        "@vue/compiler-core",
+        "@prisma/client",
+      ],
+    },
   },
 
   serverDir: "server",
