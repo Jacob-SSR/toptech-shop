@@ -1,6 +1,5 @@
 import { defineEventHandler, createError } from "h3";
 import fs from "fs/promises";
-import cloudinary from "../utils/cloudinary";
 
 export const config = {
   api: { bodyParser: false },
@@ -9,6 +8,7 @@ export const config = {
 export default defineEventHandler(async (event) => {
   try {
     const { IncomingForm } = await import("formidable");
+    const cloudinary = (await import("cloudinary")).v2;
 
     const form = new IncomingForm({ multiples: false });
     const [fields, files] = await form.parse(event.node.req);
