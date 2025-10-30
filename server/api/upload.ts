@@ -1,6 +1,5 @@
-// @ts-ignore
 import { defineEventHandler, createError } from "h3";
-import fs from "fs";
+import fs from "fs/promises";
 import cloudinary from "../utils/cloudinary";
 
 export const config = {
@@ -28,7 +27,7 @@ export default defineEventHandler(async (event) => {
       folder: "toptech_products",
     });
 
-    fs.unlinkSync(file.filepath);
+    await fs.unlink(file.filepath);
 
     return {
       success: true,
@@ -40,7 +39,7 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 500,
       statusMessage: "Upload failed",
-      message: error.message,
+      data: { message: error.message },
     });
   }
 });
