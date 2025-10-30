@@ -14,6 +14,7 @@ const isMounted = ref(false);
 const searchQuery = ref("");
 const selectedCategory = ref("all");
 const selectedStatus = ref("all");
+const selectedCondition = ref("all");
 
 const fetchProducts = async () => {
   try {
@@ -41,7 +42,11 @@ const filteredProducts = computed(() => {
     const matchStatus =
       selectedStatus.value === "all" || p.status === selectedStatus.value;
 
-    return matchSearch && matchCategory && matchStatus;
+    const matchCondition =
+      selectedCondition.value === "all" ||
+      p.condition === selectedCondition.value;
+
+    return matchSearch && matchCategory && matchStatus && matchCondition;
   });
 });
 
@@ -55,7 +60,6 @@ const toggleStatus = async (p: Product) => {
 
   try {
     await axios.put(`/api/products/${p.id}`, { status: newStatus });
-
     Swal.fire({
       toast: true,
       icon: "success",
@@ -63,9 +67,8 @@ const toggleStatus = async (p: Product) => {
       timer: 1500,
       showConfirmButton: false,
     });
-
     await fetchProducts();
-  } catch (err) {
+  } catch {
     Swal.fire("Error", "อัปเดตสถานะไม่สำเร็จ", "error");
   }
 };
@@ -79,28 +82,25 @@ const deleteProduct = async (id: number) => {
     confirmButtonText: "ลบ",
     cancelButtonText: "ยกเลิก",
   });
-
   if (!confirm.isConfirmed) return;
 
   try {
     await axios.delete(`/api/products/${id}`);
     products.value = products.value.filter((p) => p.id !== id);
     Swal.fire("Deleted!", "ลบสินค้าเรียบร้อยแล้ว", "success");
-  } catch (err) {
+  } catch {
     Swal.fire("Error", "ไม่สามารถลบสินค้าได้", "error");
   }
 };
 
 onMounted(() => {
   const user = useSupabaseUser();
-
   watchEffect(() => {
     if (user.value === null) return;
     if (!user.value) {
       navigateTo("/admin/login");
       return;
     }
-
     isMounted.value = true;
     fetchProducts();
   });
@@ -115,8 +115,10 @@ onMounted(() => {
       >
         <h1 class="page-title">Product List</h1>
 
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="relative">
+        <div
+          class="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3"
+        >
+          <div class="relative w-full sm:w-auto">
             <Search
               class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4"
             />
@@ -124,13 +126,13 @@ onMounted(() => {
               v-model="searchQuery"
               type="text"
               placeholder="ค้นหาสินค้า"
-              class="pl-9 pr-3 py-2 border rounded-md focus:ring-2 focus:ring-red-400 outline-none"
+              class="pl-9 pr-3 py-2 border rounded-md focus:ring-2 focus:ring-red-400 outline-none w-full sm:w-48"
             />
           </div>
 
           <select
             v-model="selectedCategory"
-            class="border rounded-md px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="border rounded-md px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none w-full sm:w-auto"
           >
             <option value="all">ทุกหมวดหมู่</option>
             <option value="smartphone">Smartphone</option>
@@ -146,7 +148,7 @@ onMounted(() => {
 
           <select
             v-model="selectedStatus"
-            class="border rounded-md px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="border rounded-md px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none w-full sm:w-auto"
           >
             <option value="all">ทุกสถานะ</option>
             <option value="active">แสดงผล</option>
@@ -154,9 +156,31 @@ onMounted(() => {
             <option value="draft">ฉบับร่าง</option>
           </select>
 
+          <div
+            class="flex border rounded-md overflow-hidden w-full sm:w-auto divide-x divide-gray-200"
+          >
+            <button
+              v-for="option in [
+                { label: 'ทั้งหมด', value: 'all' },
+                { label: 'มือ 1', value: 'new' },
+                { label: 'มือ 2', value: 'used' },
+              ]"
+              :key="option.value"
+              @click="selectedCondition = option.value"
+              class="flex-1 px-3 py-2 text-sm transition text-center"
+              :class="[
+                selectedCondition === option.value
+                  ? 'bg-red-500 text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-100',
+              ]"
+            >
+              {{ option.label }}
+            </button>
+          </div>
+
           <NuxtLink
             to="/admin/add"
-            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition w-full sm:w-auto text-center"
           >
             Add Product
           </NuxtLink>
@@ -178,8 +202,8 @@ onMounted(() => {
         <table class="admin-table w-full text-sm">
           <thead class="bg-gray-100 text-gray-700">
             <tr>
-              <th class="w-15 text-center">ID</th>
-              <th class="w-20 text-center">Image</th>
+              <th>ID</th>
+              <th>Image</th>
               <th>Name</th>
               <th>SKU</th>
               <th>Category</th>
@@ -190,10 +214,9 @@ onMounted(() => {
               <th>Condition</th>
               <th>Stock</th>
               <th>Status</th>
-              <th class="text-center w-24">Actions</th>
+              <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
             <tr
               v-for="p in filteredProducts"
@@ -201,7 +224,6 @@ onMounted(() => {
               class="hover:bg-gray-50 transition border-b"
             >
               <td class="text-center">{{ p.id }}</td>
-
               <td class="p-2 text-center">
                 <img
                   :src="
@@ -210,102 +232,86 @@ onMounted(() => {
                     'https://placehold.co/80x80?text=No+Image'
                   "
                   class="w-12 h-12 rounded-md border object-cover mx-auto"
-                  alt="Product Image"
                 />
               </td>
-
-              <td class="font-medium text-gray-800">{{ p.name }}</td>
-              <td class="text-gray-600">{{ p.sku }}</td>
+              <td class="font-medium">{{ p.name }}</td>
+              <td>{{ p.sku }}</td>
               <td class="capitalize">{{ p.category }}</td>
               <td>{{ p.brand }}</td>
-
               <td>
-                <span v-if="p.colors?.length" class="text-xs text-gray-600">
-                  {{ Array.isArray(p.colors) ? p.colors.join(", ") : p.colors }}
-                </span>
+                <span v-if="p.colors?.length">{{ p.colors.join(", ") }}</span>
                 <span v-else class="text-gray-400 text-xs">-</span>
               </td>
-
               <td>
-                <span v-if="p.capacity?.length" class="text-xs text-gray-600">
-                  {{
-                    Array.isArray(p.capacity)
-                      ? p.capacity.join(", ")
-                      : p.capacity
-                  }}
-                </span>
+                <span v-if="p.capacity?.length">{{
+                  p.capacity.join(", ")
+                }}</span>
                 <span v-else class="text-gray-400 text-xs">-</span>
               </td>
-
-              <td class="font-semibold text-gray-700">
-                <div class="flex flex-col text-center leading-tight">
-                  <span v-if="p.priceNew">
-                    มือ1 ฿{{ p.priceNew.toLocaleString() }}
-                  </span>
+              <td class="text-center">
+                <div class="flex flex-col leading-tight">
+                  <span v-if="p.priceNew"
+                    >มือ1 ฿{{ p.priceNew.toLocaleString() }}</span
+                  >
                   <span v-if="p.priceUsed" class="text-gray-500 text-xs">
                     มือ2 ฿{{ p.priceUsed.toLocaleString() }}
                   </span>
                 </div>
               </td>
-
-              <td>{{ p.condition === "new" ? "มือ 1" : "มือ 2" }}</td>
+              <td class="text-center">
+                {{ p.condition === "new" ? "มือ 1" : "มือ 2" }}
+              </td>
               <td class="text-center">{{ p.stock }}</td>
 
-              <!-- Status Switch -->
               <td class="text-center">
-                <div class="flex flex-col items-center gap-1">
+                <span
+                  :class="{
+                    'text-green-600': p.status === 'active',
+                    'text-gray-500': p.status === 'inactive',
+                    'text-yellow-600': p.status === 'draft',
+                  }"
+                  class="text-xs font-medium"
+                >
+                  {{
+                    p.status === "active"
+                      ? "แสดงผล"
+                      : p.status === "inactive"
+                      ? "ปิดการแสดงผล"
+                      : "ฉบับร่าง"
+                  }}
+                </span>
+                <button
+                  @click="toggleStatus(p)"
+                  class="relative w-12 h-6 flex items-center rounded-full transition-all duration-300"
+                  :class="{
+                    'bg-green-500': p.status === 'active',
+                    'bg-gray-400': p.status === 'inactive',
+                    'bg-yellow-400': p.status === 'draft',
+                  }"
+                >
                   <span
-                    class="text-xs font-medium"
+                    class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-300"
                     :class="{
-                      'text-green-600': p.status === 'active',
-                      'text-gray-500': p.status === 'inactive',
-                      'text-yellow-600': p.status === 'draft',
+                      'translate-x-6': p.status === 'active',
+                      'translate-x-3': p.status === 'draft',
+                      'translate-x-0': p.status === 'inactive',
                     }"
-                  >
-                    {{
-                      p.status === "active"
-                        ? "แสดงผล"
-                        : p.status === "inactive"
-                        ? "ปิดการแสดงผล"
-                        : "ฉบับร่าง"
-                    }}
-                  </span>
-
-                  <button
-                    @click="toggleStatus(p)"
-                    class="relative w-12 h-6 flex items-center rounded-full transition-all duration-300"
-                    :class="{
-                      'bg-green-500': p.status === 'active',
-                      'bg-gray-400': p.status === 'inactive',
-                      'bg-yellow-400': p.status === 'draft',
-                    }"
-                  >
-                    <span
-                      class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-300"
-                      :class="{
-                        'translate-x-6': p.status === 'active',
-                        'translate-x-3': p.status === 'draft',
-                        'translate-x-0': p.status === 'inactive',
-                      }"
-                    ></span>
-                  </button>
-                </div>
+                  ></span>
+                </button>
               </td>
 
-              <!-- Actions -->
-              <td class="text-center align-middle">
-                <div class="flex justify-center items-center gap-3">
+              <td class="text-center">
+                <div class="flex justify-center gap-3">
                   <NuxtLink
                     :to="`/admin/edit/${p.id}`"
-                    class="text-blue-500 hover:text-blue-700 transition"
+                    class="text-blue-500 hover:text-blue-700"
                     title="แก้ไข"
                   >
                     <Pencil class="w-5 h-5" />
                   </NuxtLink>
-
                   <button
                     @click="deleteProduct(p.id)"
-                    class="text-red-500 hover:text-red-700 transition"
+                    class="text-red-500 hover:text-red-700"
                     title="ลบสินค้า"
                   >
                     <Trash2 class="w-5 h-5" />
@@ -313,7 +319,6 @@ onMounted(() => {
                 </div>
               </td>
             </tr>
-
             <tr v-if="!filteredProducts.length">
               <td colspan="13" class="text-center text-gray-500 py-6">
                 ไม่พบสินค้าที่ตรงกับเงื่อนไข

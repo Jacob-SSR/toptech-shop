@@ -182,6 +182,30 @@ const saveProduct = async () => {
         </div>
 
         <div>
+          <label class="label">สภาพสินค้า*</label>
+          <div class="flex gap-4">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                value="new"
+                v-model="product.condition"
+                class="accent-red-500"
+              />
+              <span>มือ 1 (สินค้าใหม่)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                value="used"
+                v-model="product.condition"
+                class="accent-red-500"
+              />
+              <span>มือ 2 (สินค้ามือสอง)</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
           <label class="label">สีสินค้า</label>
           <div class="flex gap-2 mb-2">
             <input
